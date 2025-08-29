@@ -20,6 +20,7 @@ namespace TiendaPOS.Presentacion
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IServicios, Servicios>();
+            services.AddSingleton<ILoggerService, LoggerService>();
             services.AddTransient<NuevoPedidoViewModel>();
 
             services.AddSingleton<MainWindow>();

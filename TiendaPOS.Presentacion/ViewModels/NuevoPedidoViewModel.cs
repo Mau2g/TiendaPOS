@@ -12,14 +12,16 @@ namespace TiendaPOS.Presentacion.ViewModels
     public class NuevoPedidoViewModel : ViewModelBase
     {
         private readonly IServicios _servicios;
+        private readonly ILoggerService _logger;
         private ObservableCollection<Producto> _productos = new();
         private ObservableCollection<ItemCarrito> _carrito = new();
         private decimal _total;
         private string _busqueda = string.Empty;
 
-        public NuevoPedidoViewModel(IServicios servicios)
+        public NuevoPedidoViewModel(IServicios servicios, ILoggerService logger)
         {
             _servicios = servicios;
+            _logger = logger;
             
             // Inicializar comandos
             AgregarAlCarritoCommand = new RelayCommand<Producto>(AgregarAlCarrito);
@@ -77,7 +79,7 @@ namespace TiendaPOS.Presentacion.ViewModels
             catch (Exception ex)
             {
                 // Manejar el error
-                Console.WriteLine($"Error al cargar productos: {ex.Message}");
+                _logger.LogError("Error al cargar productos", ex);
             }
         }
 
@@ -182,7 +184,7 @@ namespace TiendaPOS.Presentacion.ViewModels
             catch (Exception ex)
             {
                 // Manejar el error
-                Console.WriteLine($"Error al finalizar pedido: {ex.Message}");
+                _logger.LogError("Error al finalizar pedido", ex);
             }
         }
 
